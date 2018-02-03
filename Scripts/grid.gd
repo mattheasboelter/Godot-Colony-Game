@@ -9,50 +9,71 @@ var grid_size = Vector2(16, 16)
 var grid = []
 
 func _ready():
+	set_process_input(true)
+	
+	grid_generate()
+	add_obstacles()
+
+func _input(event):
+	if(event.is_action_pressed("left_mouse")):
+			print("left mouse button")
+			print(get_mouse_tile())
+			if(add_entity(obstacle_res, get_mouse_tile())):
+				print("Entity Added Successfully")
+			else: print("Entity couldn't be added!")
+
+func grid_generate():
+	print("generating grid...")
 	for x in range(grid_size.x):
 		grid.append([])
 		for y in range(grid_size.y):
 			grid[x].append(null)
-	
-	# Obstacles
+
+func add_obstacles():
+	print("adding obstacles...")
 	var positions = []
 
-	for x in range(5):
-		var placed = false
-		while(!placed):
-			var random_x = randi() % int(grid_size.x)
-			var random_y = randi() % int(grid_size.y)
-			var grid_pos = Vector2(random_x, random_y)
+	var num_placed = 0
 
-			if(!grid[grid_pos.x][grid_pos.y]):
-				positions.append(grid_pos)
-				placed = true
-	
-	for pos in positions:
-		var obstacle_instance = obstacle_res.instance()
-		obstacle_instance.set_pos(map_to_world(pos) + tile_center)
-		grid[pos.x][pos.y] = obstacle_instance.get_name()
-		add_child(obstacle_instance)
+	while (num_placed < 5):
+		var random_x = randi() % int(grid_size.x)
+		var random_y = randi() % int(grid_size.y)
+		var grid_pos = Vector2(random_x, random_y)
+		
+		print("grid pos = (", grid_pos.x, ", ", grid_pos.y, ")")
 
-func get_cell_centent(pos=Vector2()):
-	return grid[pos.x][pos.y]
+		if(add_entity(obstacle_res, grid_pos)):
+			num_placed = num_placed + 1
+			print("obstacle added")
 
-func is_cell_vacant(pos=Vector2(), direction=Vector2()):
-	var grid_pos = world_to_map(pos) + direction
+func add_entity(entity, entity_pos):
+	print("add_entity()")
+	if(grid_cell_available(entity_pos)):
+		var entity_instance = entity.instance()
+		
+		print(entity_pos)
+		print(map_to_world(entity_pos))
+		
+		entity_instance.position = map_to_world(entity_pos) + tile_center
+		grid[entity_pos.x][entity_pos.y] = entity.get_name()
+		add_child(entity_instance)
+		print("entity added")
+		return(true)
+	else:
+		print("cell not available")
+		return(false) # Failure
 
-	if (grid_pos.x < grid_size.x && grid_pos.x >=0):
-		if(grid_pos.y < grid_size.y && grid_pos.y >=0):
-			if grid[grid_pos.x][grid_pos.y] == null:
-				return true
-	else: return false
+func grid_cell_available(pos):
+	# If the Cell is inside the grid
+	if (pos.x < grid_size.x && pos.x >=0):
+		if (pos.y < grid_size.y && pos.y >=0):
+			# If the cell is empty
+			if (grid[pos.x][pos.y] == null):
+				print("cell available")
+				return(true)
+	else:
+		print("cell not available")
+		return(false)
 
-func update_child_pos(new_pos, direction, type):
-	var grid_pos = world_to_map(new_pos)
-	print(grid_pos)
-	grid[grid_pos.x][grid_pos.y] = null
-
-	var new_grid_pos = grid_pos + direction
-	grid[new_grid_pos.x][new_grid_pos.y] = type
-
-	var target_pos = map_to_world(new_grid_pos) + tile_center
-	return target_pos
+func get_mouse_tile():
+	return(world_to_map(get_global_mouse_position()))

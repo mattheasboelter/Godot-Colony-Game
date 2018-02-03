@@ -12,16 +12,11 @@ func _process(delta):
 	# Check if a certain key is pressed...
 	if (Input.is_key_pressed(KEY_D)):
 		# And move self five pixels in the corresponding direction
-		self.move(Vector2(5, 0))
+		self.move_and_slide(Vector2(200, 0))
 
 	if (Input.is_key_pressed(KEY_A)):
-		self.move(Vector2(-5, 0))
+		self.move_and_slide(Vector2(-200, 0))
 	if (Input.is_key_pressed(KEY_W)):
-		self.move(Vector2(0, -5))
+		self.move_and_slide(Vector2(0, -200))
 	if (Input.is_key_pressed(KEY_S)):
-		self.move(Vector2(0, 5))
-
-
-
-
-
+		self.move_and_slide(Vector2(0, 200))
