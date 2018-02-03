@@ -10,7 +10,7 @@ var grid = []
 
 func _ready():
 	set_process_input(true)
-	
+
 	grid_generate()
 	add_obstacles()
 
@@ -21,6 +21,14 @@ func _input(event):
 			if(add_entity(obstacle_res, get_mouse_tile())):
 				print("Entity Added Successfully")
 			else: print("Entity couldn't be added!")
+	
+	if (event.is_action_pressed("mine")):
+		print("mine")
+
+		var occupant = grid_return_occupant(get_mouse_tile())
+		print(occupant)
+		if (occupant != null):
+			remove_entity(occupant)
 
 func grid_generate():
 	print("generating grid...")
@@ -39,7 +47,7 @@ func add_obstacles():
 		var random_x = randi() % int(grid_size.x)
 		var random_y = randi() % int(grid_size.y)
 		var grid_pos = Vector2(random_x, random_y)
-		
+
 		print("grid pos = (", grid_pos.x, ", ", grid_pos.y, ")")
 
 		if(add_entity(obstacle_res, grid_pos)):
@@ -50,18 +58,37 @@ func add_entity(entity, entity_pos):
 	print("add_entity()")
 	if(grid_cell_available(entity_pos)):
 		var entity_instance = entity.instance()
+		entity_instance.position = map_to_world(entity_pos) + tile_center
 		
+		
+		print("new entity")
+		print(entity_instance.name)
 		print(entity_pos)
 		print(map_to_world(entity_pos))
 		
-		entity_instance.position = map_to_world(entity_pos) + tile_center
-		grid[entity_pos.x][entity_pos.y] = entity.get_name()
 		add_child(entity_instance)
+		grid[entity_pos.x][entity_pos.y] = entity_instance.name
+		
 		print("entity added")
 		return(true)
 	else:
 		print("cell not available")
 		return(false) # Failure
+
+func remove_entity(entity):
+	for x in range(grid_size.x):
+		for y in range(grid_size.y):
+			if (grid[x][y] == entity):
+				var entity_instance = get_node(grid[x][y])
+				print("instance: ", entity_instance.name)
+				print("grid instance: ", grid[x][y])
+				print("x = ", x, ", y = ", y)
+				
+				grid[x][y] = null
+				entity_instance.queue_free()
+
+func grid_return_occupant(pos):
+	return(grid[pos.x][pos.y])
 
 func grid_cell_available(pos):
 	# If the Cell is inside the grid
