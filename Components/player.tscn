@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -24,7 +24,7 @@ __meta__ = {
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+[node name="Collision Box" type="CollisionShape2D" parent="." index="1"]
 
 visible = false
 position = Vector2( -0.144585, -0.144585 )
@@ -32,7 +32,7 @@ scale = Vector2( 3.15578, 3.15578 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Camera2D" type="Camera2D" parent="." index="2"]
+[node name="Camera" type="Camera2D" parent="." index="2"]
 
 anchor_mode = 1
 rotating = false
