@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/player_controller.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/icon.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/inventory.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -24,7 +25,7 @@ __meta__ = {
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Collision Box" type="CollisionShape2D" parent="." index="1"]
+[node name="CollisionBox" type="CollisionShape2D" parent="." index="1"]
 
 visible = false
 position = Vector2( -0.144585, -0.144585 )
@@ -56,5 +57,10 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
+
+[node name="Inventory" type="Node" parent="." index="3"]
+
+script = ExtResource( 3 )
+inventory_size = Vector2( 10, 5 )
 
 
