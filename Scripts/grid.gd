@@ -1,10 +1,12 @@
 extends TileMap
 
+export var grid_size = Vector2(32, 32)
+export var wood_count = 20
+
 var obstacle_res = preload("res://Components/clickables.scn")
 
 var tile_size = get_cell_size()
 var tile_center = tile_size / 2
-var grid_size = Vector2(16, 16)
 
 var grid = []
 
@@ -21,7 +23,7 @@ func _input(event):
 			if(add_entity(obstacle_res, get_mouse_tile())):
 				print("Entity Added Successfully")
 			else: print("Entity couldn't be added!")
-	
+
 	if (event.is_action_pressed("mine")):
 		print("mine")
 
@@ -43,7 +45,7 @@ func add_obstacles():
 
 	var num_placed = 0
 
-	while (num_placed < 5):
+	while (num_placed < wood_count):
 		var random_x = randi() % int(grid_size.x)
 		var random_y = randi() % int(grid_size.y)
 		var grid_pos = Vector2(random_x, random_y)
@@ -59,16 +61,16 @@ func add_entity(entity, entity_pos):
 	if(grid_cell_available(entity_pos)):
 		var entity_instance = entity.instance()
 		entity_instance.position = map_to_world(entity_pos) + tile_center
-		
-		
+
+
 		print("new entity")
 		print(entity_instance.name)
 		print(entity_pos)
 		print(map_to_world(entity_pos))
-		
+
 		add_child(entity_instance)
 		grid[entity_pos.x][entity_pos.y] = entity_instance.name
-		
+
 		print("entity added")
 		return(true)
 	else:
@@ -83,7 +85,7 @@ func remove_entity(entity):
 				print("instance: ", entity_instance.name)
 				print("grid instance: ", grid[x][y])
 				print("x = ", x, ", y = ", y)
-				
+
 				grid[x][y] = null
 				entity_instance.queue_free()
 
