@@ -3,7 +3,7 @@ extends TileMap
 export var grid_size = Vector2(32, 32)
 export var wood_count = 20
 
-var obstacle_res = preload("res://Components/clickables.tscn")
+var obstacle_res = preload("res://Components/wood.tscn")
 
 var tile_size = get_cell_size()
 var tile_center = tile_size / 2

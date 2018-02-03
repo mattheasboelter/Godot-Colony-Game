@@ -8,7 +8,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -22,12 +22,15 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
+_sections_unfolded = [ "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
+visible = false
 position = Vector2( -0.144585, -0.144585 )
 scale = Vector2( 3.15578, 3.15578 )
 shape = SubResource( 1 )
+_sections_unfolded = [ "Visibility" ]
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
 

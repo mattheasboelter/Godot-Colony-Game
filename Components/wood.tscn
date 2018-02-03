@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Sprites/icon.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/wood.png" type="Texture" id=1]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
+extents = Vector2( 29.7599, 30.3861 )
 
-[node name="StaticBody2D" type="StaticBody2D" index="0"]
+[node name="StaticBody2D" type="StaticBody2D"]
 
 input_pickable = true
 collision_layer = 1
@@ -20,7 +20,9 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -28,8 +30,8 @@ __meta__ = {
 [node name="CollisionShape2D1" type="CollisionShape2D" parent="." index="1"]
 
 position = Vector2( 0.240143, 0.386108 )
-scale = Vector2( 3.22755, 3.24467 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_lock_": true
 }
