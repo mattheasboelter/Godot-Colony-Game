@@ -6,7 +6,7 @@
 
 [node name="Root" type="Node2D" index="0"]
 
-[node name="TileMap" type="TileMap" parent="." index="0"]
+[node name="Grid" type="TileMap" parent="." index="0"]
 
 mode = 0
 tile_set = null
@@ -27,9 +27,9 @@ format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 1 )
 grid_size = Vector2( 32, 32 )
-wood_count = 20
+wood_count = 100
 
-[node name="Node2D" type="Node2D" parent="TileMap" index="0"]
+[node name="Node2D" type="Node2D" parent="Grid" index="0"]
 
 script = ExtResource( 2 )
 

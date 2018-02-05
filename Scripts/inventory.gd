@@ -1,22 +1,40 @@
 extends Node
 
-export var inventory_size = Vector2(10, 5)
+export var inventory_size = 5
 
 var inventory = []
 
-func _ready():
-	initialize_inventory()
+func item_count(resource):
+	return(inventory.count(resource))
 
-func _inventory_add(resource):
+func add(resource):
 	print("adding to inventory...")
 
-func _inventory_remove(resource):
+	if inventory.size() < inventory_size:
+		inventory.append(resource)
+		print("added to inventory")
+		return(true)
+	else:
+		print("no space left in inventory")
+		return(false)
+
+func remove(resource):
 	print("removing from inventory...")
 
-func initialize_inventory():
-	print("initializing inventory...")
+	if inventory.count(resource) > 0:
+		inventory.erase(resource)
+		print("item removed")
+	else:
+		print("item not in inventory")
 
-	for x in range(inventory_size.x):
-		grid.append([])
-		for y in range(inventory_size.y):
-			grid[x].append(null)
+func has_space():
+	if inventory.size() < inventory_size:
+		return(true)
+	else: return(false)
+
+func print_items():
+	for item in inventory:
+		print(item)
+
+func get_size():
+	return inventory.size()

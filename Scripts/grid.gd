@@ -16,19 +16,6 @@ func _ready():
 	grid_generate()
 	add_obstacles()
 
-func _input(event):
-	if event.is_action_pressed("left_mouse"):
-		if(add_entity(obstacle_res, get_mouse_tile())):
-			print("Entity Added Successfully")
-		else: print("Entity couldn't be added!")
-
-	if event.is_action_pressed("mine"):
-		print("attempting to mine")
-		var occupant = grid_return_occupant(get_mouse_tile())
-		if (occupant != null):
-			remove_entity(occupant)
-		else: print("nothing to mine")
-
 func grid_generate():
 	print("generating grid...")
 	for x in range(grid_size.x):
