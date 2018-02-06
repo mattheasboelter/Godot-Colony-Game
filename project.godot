@@ -13,7 +13,7 @@ config_version=3
 run/main_scene="res://Scenes/base.tscn"
 icon="res://icon.png"
 main_scene="res://Scenes/base.scn"
-name="Godot-Colony-Game"
+name="Colony Game"
 
 [input]
 
