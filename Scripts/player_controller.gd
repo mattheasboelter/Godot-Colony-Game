@@ -38,9 +38,10 @@ func _input(event):
 	if event.is_action_pressed("mine"):
 		if $Inventory.has_space():
 			var cell_occupant = grid.grid_return_occupant(grid.get_mouse_tile())
-			if grid.remove_entity(cell_occupant):
-				$Inventory.add("pizza")
-				print($Inventory.inventory.size())
+			if cell_occupant != null:
+				if grid.remove_entity(cell_occupant):
+					$Inventory.add("pizza")
+					print($Inventory.inventory.size())
 	
 
 

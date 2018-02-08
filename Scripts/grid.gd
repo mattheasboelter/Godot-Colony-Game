@@ -40,18 +40,19 @@ func add_obstacles():
 			num_placed = num_placed + 1
 			print("obstacle added")
 
-func add_entity(entity, entity_pos):
+func add_entity(entity_type, entity_pos):
 	print("add_entity()")
 	if grid_return_occupant(entity_pos) == null:
-		var entity_instance = entity.instance()
+		var entity_instance = obstacle_res.instance()
+		
 		entity_instance.position = map_to_world(entity_pos) + tile_center
-
+		var entity_name = str("wood", "-", entity_pos.x, ",", entity_pos.y)
+		entity_instance.name = entity_name
+		
 		add_child(entity_instance)
 		grid[entity_pos.x][entity_pos.y] = entity_instance.name
 		
 		print(entity_instance.name)
-		print("entity grid position = (", entity_pos.x, ", ", entity_pos.y, ")")
-
 		print("entity added")
 		return(true)
 	else:
@@ -60,17 +61,27 @@ func add_entity(entity, entity_pos):
 
 func remove_entity(entity_id):
 	print("remove_entity()")
-	for x in range(grid_size.x):
-		for y in range(grid_size.y):
-			if grid[x][y] == entity_id:
-				var entity = get_node(grid[x][y])
-				print("entity: ", entity.name)
-				print("position: (", x, ", ", y, ")")
+	if entity_id != null:
+		var splitted_entity_id = entity_id.split("-")
+	
+		var entity_position = splitted_entity_id[1].split(",")
+		
+		var entity_x = int(entity_position[0])
+		var entity_y = int(entity_position[1])
+		var entity_type = splitted_entity_id[0]
+	
+		print("Position: ", entity_x, ", ", entity_y)
+		print("Entity type: ", entity_id)
+		
+		if grid[entity_x][entity_y] == entity_id:
+			var entity = get_node(entity_id)
+			grid[entity_x][entity_y] = null
+			entity.queue_free()
+			print("Successfully removed entity.")
+			return(true)
+	print("Entity Couldn't be Removed")
+	return(false)
 
-				grid[x][y] = null
-				entity.queue_free()
-				print("successfully removed entity")
-				return(true)
 
 func grid_return_occupant(pos):
 	return(grid[pos.x][pos.y])
