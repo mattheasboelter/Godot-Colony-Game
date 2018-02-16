@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/player_controller.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/icon.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/inventory.gd" type="Script" id=3]
+[ext_resource path="res://Components/hud.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -62,5 +63,7 @@ editor_draw_drag_margin = false
 
 script = ExtResource( 3 )
 inventory_size = 5
+
+[node name="GUI" parent="." index="4" instance=ExtResource( 4 )]
 
 

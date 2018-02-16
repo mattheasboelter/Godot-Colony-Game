@@ -1,5 +1,7 @@
 extends Node
 
+signal update_inventory
+
 export var inventory_size = 5
 
 var inventory = []
@@ -12,6 +14,7 @@ func add(resource):
 
 	if inventory.size() < inventory_size:
 		inventory.append(resource)
+		emit_signal("update_inventory", inventory)
 		print("added to inventory")
 		return(true)
 	else:
@@ -24,6 +27,8 @@ func remove(resource):
 	if inventory.count(resource) > 0:
 		inventory.erase(resource)
 		print("item removed")
+		
+		emit_signal("update_inventory", inventory)
 	else:
 		print("item not in inventory")
 
