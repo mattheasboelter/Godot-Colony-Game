@@ -21,6 +21,10 @@ func select(index):
 	selected = index
 	emit_signal("update_inventory", inventory, selected)
 
+func deselect():
+	selected = null
+	emit_signal("update_inventory", inventory, selected)
+
 func selected_type():
 	if selected != null:
 		print(inventory[selected])

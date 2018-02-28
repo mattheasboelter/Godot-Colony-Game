@@ -32,8 +32,13 @@ func _process(delta):
 func _input(event):
 	for i in range($Inventory.hotbar_size):
 		if event.is_action_pressed(str("inventory_", i + 1)):
-			$Inventory.select(i)
+			if $Inventory.selected != i:
+				$Inventory.select(i)
+			else:
+				$Inventory.deselect()
 
+	if event.is_action_pressed("deselect"):
+		$Inventory.deselect()
 	if event.is_action_pressed("left_mouse"):
 		if $Inventory.selected != null:
 			if grid.add_entity($Inventory.selected_type(), grid.get_mouse_tile()):
