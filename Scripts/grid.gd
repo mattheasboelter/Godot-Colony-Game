@@ -1,9 +1,9 @@
 extends TileMap
 
+var Types = preload("res://Scripts/type.gd").new().Types
+
 export var grid_size = Vector2(32, 32)
 export var wood_count = 20
-
-var obstacle_res = preload("res://Components/wood.tscn")
 
 var tile_size = get_cell_size()
 var tile_center = tile_size / 2
@@ -36,17 +36,17 @@ func add_obstacles():
 
 		print("grid pos = (", grid_pos.x, ", ", grid_pos.y, ")")
 
-		if add_entity(obstacle_res, grid_pos):
+		if add_entity("wood", grid_pos):
 			num_placed = num_placed + 1
 			print("obstacle added")
 
 func add_entity(entity_type, entity_pos):
 	print("add_entity()")
 	if grid_return_occupant(entity_pos) == null:
-		var entity_instance = obstacle_res.instance()
+		var entity_instance = load(Types[entity_type]).instance()
 		
 		entity_instance.position = map_to_world(entity_pos) + tile_center
-		var entity_name = str("wood", "-", entity_pos.x, ",", entity_pos.y)
+		var entity_name = str(entity_type, "-", entity_pos.x, ",", entity_pos.y)
 		entity_instance.name = entity_name
 		
 		add_child(entity_instance)

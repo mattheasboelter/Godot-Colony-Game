@@ -3,34 +3,56 @@ extends Node
 signal update_inventory
 
 export var inventory_size = 5
+export var hotbar_size = 5
 
 var inventory = []
+var selected = null
+
+func _ready():
+	inventory.append("wood_wall")
+	inventory.append("wood_wall")
+	inventory.append("wood_wall")
 
 func item_count(resource):
 	return(inventory.count(resource))
+
+func select(index):
+	print("selecting ", index)
+	selected = index
+	emit_signal("update_inventory", inventory, selected)
+
+func selected_type():
+	if selected != null:
+		print(inventory[selected])
+		return(inventory[selected])
+	else:
+		return(null)
 
 func add(resource):
 	print("adding to inventory...")
 
 	if inventory.size() < inventory_size:
 		inventory.append(resource)
-		emit_signal("update_inventory", inventory)
+		emit_signal("update_inventory", inventory, selected)
 		print("added to inventory")
 		return(true)
 	else:
 		print("no space left in inventory")
 		return(false)
 
-func remove(resource):
+func remove():
 	print("removing from inventory...")
 
-	if inventory.count(resource) > 0:
-		inventory.erase(resource)
+	if selected != null:
+		inventory.remove(selected)
 		print("item removed")
-		
-		emit_signal("update_inventory", inventory)
+
+		if selected >= inventory.size():
+			selected = null
+	
+		emit_signal("update_inventory", inventory, selected)
 	else:
-		print("item not in inventory")
+		print("nothing to remove")
 
 func has_space():
 	if inventory.size() < inventory_size:

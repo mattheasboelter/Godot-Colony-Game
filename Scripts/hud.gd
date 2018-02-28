@@ -8,13 +8,19 @@ func _ready():
 	
 	add_child(label)
 
-func _update_inventory(inventory):
+func _update_inventory(inventory, selected):
 	print("update inventory()")
 	print(inventory)
 	var label_text = ""
 	
+	var index = 0
 	for item in inventory:
 		print(item)
-		label_text += item + ", "
+		if selected == index:
+			print("selected item")
+			label_text += "|" + item + "|" + ", "
+		else:
+			label_text += item + ", "
+		index = index + 1
 	
 	label.text = label_text

@@ -2,6 +2,8 @@
 
 extends KinematicBody2D
 
+var Types = preload("res://Scripts/type.gd").new().Types
+
 var wood_res = preload("res://Components/wood.tscn")
 
 onready var grid = get_node("/root/Root/Grid/")
@@ -9,9 +11,7 @@ var inventory
 
 # _ready() is run when the node is added to the scene
 func _ready():
-	# Tell godot to call _process() life cycle function when in game loop
 	self.set_process(true);
-	
 	
 	var inventory = $Inventory
 
@@ -30,17 +30,22 @@ func _process(delta):
 		self.move_and_slide(Vector2(0, 200))
 
 func _input(event):
+	for i in range($Inventory.hotbar_size):
+		if event.is_action_pressed(str("inventory_", i + 1)):
+			$Inventory.select(i)
+
 	if event.is_action_pressed("left_mouse"):
-		if $Inventory.item_count("pizza"):
-			if grid.add_entity(wood_res, grid.get_mouse_tile()):
-				$Inventory.remove("pizza")
-				print($Inventory.inventory.size())
+		if $Inventory.selected != null:
+			if grid.add_entity($Inventory.selected_type(), grid.get_mouse_tile()):
+				$Inventory.remove()
 	if event.is_action_pressed("mine"):
 		if $Inventory.has_space():
 			var cell_occupant = grid.grid_return_occupant(grid.get_mouse_tile())
+
 			if cell_occupant != null:
+				var occupant_type = cell_occupant.split("-")[0]
 				if grid.remove_entity(cell_occupant):
-					$Inventory.add("pizza")
+					$Inventory.add(occupant_type)
 					print($Inventory.inventory.size())
 	
 
