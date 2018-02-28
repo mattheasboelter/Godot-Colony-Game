@@ -3,14 +3,17 @@ extends Control
 onready var label = Label.new()
 
 func _ready():
-	get_node("../Inventory").connect("update_inventory", self, "_update_inventory")
-	
+	var inventory = get_node("../Inventory")
+	inventory.connect("update_inventory", self, "_update_inventory")
+
+	_update_inventory(inventory.inventory, inventory.selected)
 	
 	add_child(label)
 
 func _update_inventory(inventory, selected):
 	print("update inventory()")
 	print(inventory)
+	print(selected)
 	var label_text = ""
 	
 	var index = 0
