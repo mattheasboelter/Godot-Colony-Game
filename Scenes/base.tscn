@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/grid.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/grid_visualizer.gd" type="Script" id=2]
 [ext_resource path="res://Components/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Components/hotbar.tscn" type="PackedScene" id=4]
 
 [node name="Root" type="Node2D"]
 
@@ -34,5 +35,24 @@ wood_count = 100
 script = ExtResource( 2 )
 
 [node name="Player" parent="." index="1" instance=ExtResource( 3 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="Hotbar" parent="CanvasLayer" index="0" instance=ExtResource( 4 )]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -398.0
+margin_top = -118.0
+margin_right = 398.0
+margin_bottom = 0.0
 
 

@@ -1,9 +1,9 @@
 extends Node
 
-signal update_inventory
+signal hotbar_update
 
-export var inventory_size = 5
-export var hotbar_size = 5
+export var inventory_size = 10
+export var hotbar_size = 10
 
 var inventory = []
 var selected = null
@@ -12,18 +12,24 @@ func _ready():
 	inventory.append("wood_wall")
 	inventory.append("wood_wall")
 	inventory.append("wood_wall")
+	
+	for i in range(inventory_size):
+		inventory.append(null)
 
 func item_count(resource):
 	return(inventory.count(resource))
 
 func select(index):
-	print("selecting ", index)
-	selected = index
-	emit_signal("update_inventory", inventory, selected)
+	if inventory[index] != null:
+		print("selecting ", index)
+		selected = index
+		emit_signal("hotbar_update", self)
+	else:
+		selected = null
 
 func deselect():
 	selected = null
-	emit_signal("update_inventory", inventory, selected)
+	emit_signal("hotbar_update", self)
 
 func selected_type():
 	if selected != null:
@@ -34,34 +40,35 @@ func selected_type():
 
 func add(resource):
 	print("adding to inventory...")
-
-	if inventory.size() < inventory_size:
-		inventory.append(resource)
-		emit_signal("update_inventory", inventory, selected)
-		print("added to inventory")
-		return(true)
-	else:
-		print("no space left in inventory")
-		return(false)
+	
+	for i in range(inventory.size()):
+		if inventory[i] == null:
+			print("slot ", i, "== null")
+			inventory[i] = resource
+			emit_signal("hotbar_update", self)
+			print("added to inventory")
+			return(true)
+	
+	return(false)
 
 func remove():
 	print("removing from inventory...")
 
 	if selected != null:
-		inventory.remove(selected)
+		inventory[selected] = null
+		selected = null
 		print("item removed")
-
-		if selected >= inventory.size():
-			selected = null
 	
-		emit_signal("update_inventory", inventory, selected)
+		emit_signal("hotbar_update", self)
 	else:
 		print("nothing to remove")
 
 func has_space():
-	if inventory.size() < inventory_size:
-		return(true)
-	else: return(false)
+	for i in range(inventory.size()):
+		if inventory[i] == null:
+			return(true)
+	return(false)
+
 
 func print_items():
 	for item in inventory:

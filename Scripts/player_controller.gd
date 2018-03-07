@@ -43,8 +43,9 @@ func _input(event):
 		if $Inventory.selected != null:
 			if grid.add_entity($Inventory.selected_type(), grid.get_mouse_tile()):
 				$Inventory.remove()
-	if event.is_action_pressed("mine"):
+	if event.is_action_pressed("mine"):	
 		if $Inventory.has_space():
+			print("mining")
 			var cell_occupant = grid.grid_return_occupant(grid.get_mouse_tile())
 
 			if cell_occupant != null:
